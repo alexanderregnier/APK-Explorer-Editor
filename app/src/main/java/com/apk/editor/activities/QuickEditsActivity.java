@@ -18,6 +18,7 @@ import com.apk.editor.utils.SerializableItems.QuickEditsItems;
 import com.apk.editor.utils.SplitAPKInstaller;
 import com.apk.editor.utils.dialogs.ProgressDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import io.github.pixee.security.ZipSecurity;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -100,7 +101,7 @@ public class QuickEditsActivity extends AppCompatActivity {
                         File tmpFile = File.createTempFile("tmpApp",".apk", getExternalCacheDir());
                         FileInputStream fis = new FileInputStream(mAPKPath);
                         FileOutputStream fos = new FileOutputStream(tmpFile);
-                        ZipInputStream zipInputStream = new ZipInputStream(new BufferedInputStream(fis));
+                        ZipInputStream zipInputStream = ZipSecurity.createHardenedInputStream(new BufferedInputStream(fis));
                         ZipOutputStream zipOutputStream = new ZipOutputStream(fos);
 
                         for (ZipEntry in; (in = zipInputStream.getNextEntry()) != null;) {
