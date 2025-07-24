@@ -18,6 +18,7 @@ import com.apk.editor.utils.SerializableItems.QuickEditsItems;
 import com.apk.editor.utils.SplitAPKInstaller;
 import com.apk.editor.utils.dialogs.ProgressDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import java.nio.file.Files;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -97,7 +98,7 @@ public class QuickEditsActivity extends AppCompatActivity {
                     mOutFile = new File(APKData.getExportAPKsPath(QuickEditsActivity.this), (!Objects.equals(mPackageName,
                             mData.get(1).getValue()) ? mData.get(1).getValue() : mPackageName) + "_aee-signed.apk");
                     try {
-                        File tmpFile = File.createTempFile("tmpApp",".apk", getExternalCacheDir());
+                        File tmpFile = Files.createTempFile(getExternalCacheDir().toPath(), "tmpApp", ".apk").toFile();
                         FileInputStream fis = new FileInputStream(mAPKPath);
                         FileOutputStream fos = new FileOutputStream(tmpFile);
                         ZipInputStream zipInputStream = new ZipInputStream(new BufferedInputStream(fis));
